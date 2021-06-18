@@ -1,5 +1,9 @@
 # Renaissance
 
+Renaissance is a system for text-based embodied roleplaying, It's meant for people to create virtual environments in which they can collaboratively tell stories by taking on the roles of certain characters. The primary focus is on free-form in-character actions, but there's also some support for mechanical systems and out-of-character communication to support this kind of roleplaying.
+
+# Phoenix default
+
 To start your Phoenix server:
 
   * Install dependencies with `mix deps.get`
