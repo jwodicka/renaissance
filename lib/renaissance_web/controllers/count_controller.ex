@@ -4,6 +4,6 @@ defmodule RenaissanceWeb.CountController do
   def index(conn, _params) do
     count = Counter.value()
     Counter.increment()
-    json(conn, %{count: count})
+    json(conn, %{counting: count})
   end
 end
