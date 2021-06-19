@@ -1,5 +1,6 @@
 defmodule RenaissanceWeb.Router do
   use RenaissanceWeb, :router
+  require Ueberauth
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -18,6 +19,15 @@ defmodule RenaissanceWeb.Router do
 
     get "/", PageController, :index
     get "/count", CountController, :index
+    get "/logout", AuthController, :logout
+  end
+
+  scope "/auth", RenaissanceWeb do
+    pipe_through :browser
+
+    get "/:provider", AuthController, :request
+    get "/:provider/callback", AuthController, :callback
+    post "/:provider/callback", AuthController, :callback
   end
 
   # Other scopes may use custom stacks.

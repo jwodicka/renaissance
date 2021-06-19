@@ -20,7 +20,12 @@ defmodule Renaissance.MixProject do
   def application do
     [
       mod: {Renaissance.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [
+        :ueberauth,
+        :ueberauth_auth0,
+        :logger,
+        :runtime_tools
+      ]
     ]
   end
 
@@ -42,7 +47,9 @@ defmodule Renaissance.MixProject do
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
-      {:distillery, "~> 2.1"}
+      {:distillery, "~> 2.1"},
+      {:ueberauth, "~> 0.6.3"},
+      {:ueberauth_auth0, "~> 0.8.1"}
     ]
   end
 
