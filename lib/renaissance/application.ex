@@ -12,9 +12,10 @@ defmodule Renaissance.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: Renaissance.PubSub},
       # Start the Endpoint (http/https)
-      RenaissanceWeb.Endpoint
+      RenaissanceWeb.Endpoint,
       # Start a worker by calling: Renaissance.Worker.start_link(arg)
       # {Renaissance.Worker, arg}
+      {Counter, 0}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
