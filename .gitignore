@@ -32,3 +32,7 @@ npm-debug.log
 # we ignore priv/static. You may want to comment
 # this depending on your deployment strategy.
 /priv/static/
+
+# This is what we use to load credentials during development.
+# Secrets should be secret.
+**/*.secret.exs
