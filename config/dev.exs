@@ -56,12 +56,13 @@ config :renaissance, RenaissanceWeb.Endpoint,
     ]
   ]
 
-# Config to connect to a locally-running copy of dynamodb.
+# Config to connect to a locally-running copy of dynamodb for use in development.
 # Local dynamodb will accept any credentials.
 config :renaissance, Renaissance.Repo,
   access_key_id: "localkey",
   secret_access_key: "localsecret",
   region: "us-west-2",
+  dynamodb_local: true,
   debug_requests: true, # ExAws option to enable debug on aws http request.
   dynamodb: [
     scheme: "http://",
