@@ -13,6 +13,8 @@ defmodule Renaissance.Application do
       {Phoenix.PubSub, name: Renaissance.PubSub},
       # Start the Endpoint (http/https)
       RenaissanceWeb.Endpoint,
+      # Start the Ecto repository
+      Renaissance.Repo,
       # Start a worker by calling: Renaissance.Worker.start_link(arg)
       # {Renaissance.Worker, arg}
       {Counter, 0}

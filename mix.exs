@@ -24,7 +24,9 @@ defmodule Renaissance.MixProject do
         :ueberauth,
         :ueberauth_auth0,
         :logger,
-        :runtime_tools
+        :runtime_tools,
+        :phoenix_ecto,
+        :ecto_adapters_dynamodb
       ]
     ]
   end
@@ -39,6 +41,8 @@ defmodule Renaissance.MixProject do
   defp deps do
     [
       {:phoenix, "~> 1.5.9"},
+      {:phoenix_ecto, "~> 4.3"},
+      {:ecto_adapters_dynamodb, "~> 3.1"},
       {:phoenix_html, "~> 2.11"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:phoenix_live_dashboard, "~> 0.4"},

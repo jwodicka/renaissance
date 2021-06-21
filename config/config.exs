@@ -15,6 +15,9 @@ config :renaissance, RenaissanceWeb.Endpoint,
   pubsub_server: Renaissance.PubSub,
   live_view: [signing_salt: "Reu24Wwa"]
 
+# Configures ecto repos
+config :renaissance, ecto_repos: [Renaissance.Repo]
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
