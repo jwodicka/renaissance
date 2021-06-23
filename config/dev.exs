@@ -63,6 +63,7 @@ config :renaissance, Renaissance.Repo,
   secret_access_key: "localsecret",
   region: "us-west-2",
   dynamodb_local: true,
+  scan_tables: ["schema_migrations"], # Because scans are expensive, we must opt into them.
   debug_requests: true, # ExAws option to enable debug on aws http request.
   dynamodb: [
     scheme: "http://",
@@ -70,6 +71,12 @@ config :renaissance, Renaissance.Repo,
     port: 8000,
     region: "us-west-2"
   ]
+  # To set up the DB, first ensure that dynamoDB is running on localhost:8000
+  # Then:
+  # mix ecto.migrate --step 0
+  # makes sure the table used to run migrations exists. Then:
+  # mix ecto.migrate
+  # will run the migrations.
 
 # Do not include metadata nor timestamps in development logs
 config :logger, :console, format: "[$level] $message\n"
