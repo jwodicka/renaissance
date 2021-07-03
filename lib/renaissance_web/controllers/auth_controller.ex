@@ -21,7 +21,8 @@ defmodule RenaissanceWeb.AuthController do
 
   def callback(%{assigns: %{ueberauth_auth: auth}} = conn, _params) do
     conn
-    |> put_flash(:info, "Hey, I know who you are!")
+#    |> put_flash(:info, "Hey, I know who you are!")
+    |> put_flash(:info, auth.uid)
     |> redirect(to: "/")
   end
 end
