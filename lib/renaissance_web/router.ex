@@ -8,6 +8,12 @@ defmodule RenaissanceWeb.Router do
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug :assign_user
+  end
+
+  def assign_user(conn, _opts) do
+    conn
+    |> assign(:current_user, get_session(conn, :current_user))
   end
 
   pipeline :api do
