@@ -26,6 +26,8 @@ defmodule RenaissanceWeb.Router do
     get "/", PageController, :index
     get "/count", CountController, :index
     get "/logout", AuthController, :logout
+
+    resources "/rooms", RoomController
   end
 
   scope "/auth", RenaissanceWeb do
