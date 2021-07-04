@@ -71,12 +71,6 @@ config :renaissance, Renaissance.Repo,
     port: 8000,
     region: "us-west-2"
   ]
-  # To set up the DB, first ensure that dynamoDB is running on localhost:8000
-  # Then:
-  # mix ecto.migrate --step 0
-  # makes sure the table used to run migrations exists. Then:
-  # mix ecto.migrate
-  # will run the migrations.
 
 # Do not include metadata nor timestamps in development logs
 config :logger, :console, format: "[$level] $message\n"
