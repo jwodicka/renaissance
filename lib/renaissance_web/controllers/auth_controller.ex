@@ -23,8 +23,8 @@ defmodule RenaissanceWeb.AuthController do
     case Renaissance.User.find_or_create(auth.uid, auth.info.name) do
       {:ok, user} ->
         conn
-        # |> put_flash(:info, "Hey, I know who you are!")
-        |> put_flash(:info, user.name)
+        |> put_flash(:info, "Welcome, " <> user.name <> "!")
+        |> put_session(:current_user, user)
         |> redirect(to: "/")
       {:error, reason} ->
         conn
