@@ -26,7 +26,7 @@
             <% end %>
           </ul>
         </nav>
-        <h1>Renaissance</h1>
+        <h1><a href="/">Renaissance</a></h1>
       </section>
     </header>
     <main role="main" class="container">

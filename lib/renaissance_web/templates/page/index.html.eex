@@ -5,8 +5,10 @@
 
 <section class="row">
   <article class="column">
-    <h2>Test Links</h2>
+    <h2>Quick Links</h2>
     <ul>
+      <li><a href="/rooms">Rooms</a></li>
+      <li><a href="/characters">Characters</a></li>
     </ul>
   </article>
   <article class="column">
