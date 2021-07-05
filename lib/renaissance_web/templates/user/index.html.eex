@@ -3,8 +3,9 @@
 <table>
   <thead>
     <tr>
-      <th>Authid</th>
       <th>Name</th>
+      <th>ID</th>
+      <th>Authid</th>
       <th>Sysadmin</th>
 
       <th></th>
@@ -13,8 +14,9 @@
   <tbody>
 <%= for user <- @users do %>
     <tr>
-      <td><%= user.authid %></td>
       <td><%= user.name %></td>
+      <td><%= user.id %></td>
+      <td><%= user.authid %></td>
       <td><%= user.sysadmin %></td>
 
       <td>

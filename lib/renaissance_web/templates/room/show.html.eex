@@ -1,18 +1,23 @@
-<h1>Show Room</h1>
+<h1><%= @room.name %></h1>
 
-<ul>
+<div class="description">
+  <%= @room.description %>
+</div>
 
-  <li>
-    <strong>Description:</strong>
-    <%= @room.description %>
-  </li>
+<div class="roster">
+  Characters:
+  <ul>
+  <%= for character <- @characters do %>
+    <li><%= link character.name, to: Routes.character_path(@conn, :show, character) %></li>
+  <% end %>
+  </ul>
+</div>
 
-  <li>
-    <strong>Name:</strong>
-    <%= @room.name %>
-  </li>
+<%= for message <- @messages do %>
+  <p><%= message %></p>
+<% end %>
 
-</ul>
-
-<span><%= link "Edit", to: Routes.room_path(@conn, :edit, @room) %></span>
-<span><%= link "Back", to: Routes.room_path(@conn, :index) %></span>
+<div class="actions">
+  <span><%= link "Edit", to: Routes.room_path(@conn, :edit, @room) %></span>
+  <span><%= link "Back", to: Routes.room_path(@conn, :index) %></span>
+</div>

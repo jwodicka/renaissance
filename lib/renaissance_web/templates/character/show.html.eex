@@ -1,23 +1,23 @@
-<h1>Show Character</h1>
+<h1><%= @character.name %></h1>
+
+<div class="description">
+  <%= @character.description %>
+</div>
 
 <ul>
-
   <li>
-    <strong>Name:</strong>
-    <%= @character.name %>
-  </li>
-
-  <li>
-    <strong>Description:</strong>
-    <%= @character.description %>
+    <strong>ID:</strong>
+    <%= @character.id %>
   </li>
 
   <li>
     <strong>Admin:</strong>
-    <%= @character.admin %>
+    <%= link @character.admin, to: Routes.user_path(@conn, :show, @character.admin) %>
   </li>
 
 </ul>
 
-<span><%= link "Edit", to: Routes.character_path(@conn, :edit, @character) %></span>
-<span><%= link "Back", to: Routes.character_path(@conn, :index) %></span>
+<div class="actions">
+  <span><%= link "Edit", to: Routes.character_path(@conn, :edit, @character) %></span>
+  <span><%= link "Back", to: Routes.character_path(@conn, :index) %></span>
+</div>

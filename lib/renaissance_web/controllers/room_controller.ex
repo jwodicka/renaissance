@@ -3,6 +3,7 @@ defmodule RenaissanceWeb.RoomController do
 
   alias Renaissance.World
   alias Renaissance.World.Room
+  alias Renaissance.Transcript
 
   def index(conn, _params) do
     rooms = World.list_rooms()
@@ -28,7 +29,12 @@ defmodule RenaissanceWeb.RoomController do
 
   def show(conn, %{"id" => id}) do
     room = World.get_room!(id)
-    render(conn, "show.html", room: room)
+    characters = Enum.map(room.characters, fn id -> World.get_character!(id) end)
+    messages = case Transcript.get_room!(id).messages do
+      nil -> []
+      m -> m
+    end
+    render(conn, "show.html", room: room, characters: characters, messages: messages)
   end
 
   def edit(conn, %{"id" => id}) do
