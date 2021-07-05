@@ -15,7 +15,9 @@ defmodule RenaissanceWeb.CharacterController do
   end
 
   def create(conn, %{"character" => character_params}) do
-    case World.create_character(character_params) do
+    params = Map.put(character_params, "admin", conn.assigns.current_user.authid)
+
+    case World.create_character(params) do
       {:ok, character} ->
         conn
         |> put_flash(:info, "Character created successfully.")
