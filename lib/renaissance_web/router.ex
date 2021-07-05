@@ -44,6 +44,7 @@ defmodule RenaissanceWeb.Router do
 
     resources "/rooms", RoomController
     resources "/characters", CharacterController
+    resources "/users", UserController
   end
 
   scope "/auth", RenaissanceWeb do

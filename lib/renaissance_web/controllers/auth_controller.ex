@@ -5,6 +5,7 @@ defmodule RenaissanceWeb.AuthController do
   plug Ueberauth
 
   alias Ueberauth.Strategy.Helpers
+  alias Renaissance.Auth
 
   def logout(conn, _params) do
     conn
@@ -20,7 +21,7 @@ defmodule RenaissanceWeb.AuthController do
   end
 
   def callback(%{assigns: %{ueberauth_auth: auth}} = conn, _params) do
-    case Renaissance.User.find_or_create(auth.uid, auth.info.name) do
+    case Auth.find_or_create_user_by_authid(auth.uid, %{name: auth.info.name}) do
       {:ok, user} ->
         conn
         |> put_flash(:info, "Welcome, " <> user.name <> "!")
