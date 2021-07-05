@@ -28,6 +28,7 @@ defmodule RenaissanceWeb.Router do
     get "/logout", AuthController, :logout
 
     resources "/rooms", RoomController
+    resources "/characters", CharacterController
   end
 
   scope "/auth", RenaissanceWeb do
