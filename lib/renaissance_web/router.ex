@@ -11,6 +11,18 @@ defmodule RenaissanceWeb.Router do
     plug :assign_user
   end
 
+  # Must be called after browser pipeline
+  def require_login(conn, _opts) do
+    if conn.assigns.current_user do
+      conn
+    else
+      conn
+      |> put_flash(:error, "You must be logged in to access this page")
+      |> redirect(to: "/")
+      |> halt()
+    end
+  end
+
   def assign_user(conn, _opts) do
     conn
     |> assign(:current_user, get_session(conn, :current_user))
@@ -24,6 +36,9 @@ defmodule RenaissanceWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+
+    pipe_through :require_login
+
     get "/count", CountController, :index
     get "/logout", AuthController, :logout
 

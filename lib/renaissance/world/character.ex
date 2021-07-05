@@ -16,5 +16,6 @@ defmodule Renaissance.World.Character do
     character
     |> cast(attrs, [:name, :description, :admin])
     |> validate_required([:name, :admin])
+    # TODO: Validate that admin is actually a valid user ID
   end
 end
