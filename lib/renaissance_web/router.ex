@@ -43,6 +43,7 @@ defmodule RenaissanceWeb.Router do
     get "/logout", AuthController, :logout
 
     resources "/rooms", RoomController
+    post "/rooms/:room/send", RoomController, :send
     resources "/characters", CharacterController
     resources "/users", UserController
   end

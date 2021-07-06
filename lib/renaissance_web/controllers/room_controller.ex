@@ -4,6 +4,7 @@ defmodule RenaissanceWeb.RoomController do
   alias Renaissance.World
   alias Renaissance.World.Room
   alias Renaissance.Transcript
+  alias Renaissance.Transcript.Message
 
   def index(conn, _params) do
     rooms = World.list_rooms()
@@ -30,11 +31,12 @@ defmodule RenaissanceWeb.RoomController do
   def show(conn, %{"id" => id}) do
     room = World.get_room!(id)
     characters = Enum.map(room.characters, fn id -> World.get_character!(id) end)
-    messages = case Transcript.get_room!(id).messages do
+    messages = case Transcript.list_messages_by_channel(id) do
       nil -> []
       m -> m
     end
-    render(conn, "show.html", room: room, characters: characters, messages: messages)
+    changeset = Transcript.change_message(%Message{})
+    render(conn, "show.html", room: room, characters: characters, messages: messages, changeset: changeset)
   end
 
   def edit(conn, %{"id" => id}) do
@@ -54,6 +56,31 @@ defmodule RenaissanceWeb.RoomController do
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", room: room, changeset: changeset)
+    end
+  end
+
+  def send(conn, %{"room" => id, "message" => message_params}) do
+    room = World.get_room!(id)
+
+    final_params = message_params
+      |> Map.put("channelid", id)
+      |> Map.put("timestamp", System.monotonic_time(:microsecond))
+      |> Map.put("userid", conn.assigns.current_user.id)
+
+
+    case Transcript.create_message(final_params) do
+      {:ok, _message} ->
+        conn
+        |> put_flash(:info, "Message sent successfully.")
+        |> redirect(to: Routes.room_path(conn, :show, room))
+
+      {:error, %Ecto.Changeset{} = changeset} ->
+        characters = Enum.map(room.characters, fn id -> World.get_character!(id) end)
+        messages = case Transcript.list_messages_by_channel(id) do
+          nil -> []
+          m -> m
+        end
+        render(conn, "show.html", room: room, characters: characters, messages: messages, changeset: changeset)
     end
   end
 

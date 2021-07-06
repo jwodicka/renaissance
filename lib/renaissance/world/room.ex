@@ -8,7 +8,7 @@ defmodule Renaissance.World.Room do
   schema "rooms" do
     field :description, :string
     field :name, :string
-    field :characters, DynamoDBSet, default: MapSet.new()
+    field :characters, DynamoDBSet, default: []
 
     timestamps()
   end
