@@ -1,9 +1,9 @@
-@import "colors.scss";
+@use "colors";
 
 header {
   width: 100%;
-  background: $ui-background;
-  border-bottom: 1px solid $ui-border;
+  background-color: colors.$ui-background;
+  border-bottom: 1px solid colors.$ui-border;
   margin-bottom: 1rem;
   padding: 0 0.5rem;
   
@@ -38,7 +38,7 @@ header {
       margin: 0;
 
       a {
-        color: $text;
+        color: colors.$text;
         text-decoration: none;
       }
     }

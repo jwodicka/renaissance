@@ -1,3 +1,5 @@
+@use "colors";
+
 .roster {
 
   min-width: 20vw;
@@ -5,7 +7,7 @@
   line-height: 1.5;
   margin-bottom: 1rem;
 
-  background-color: $context-background;
+  background-color: colors.$context-background;
   padding: 0.25rem 0.5rem;
 
   border-radius: 4px;
@@ -13,7 +15,7 @@
   h2 {
     font-size: 1rem;
     margin: 0 0 0.25rem;
-    border-bottom: 1px solid $context-separator;
+    border-bottom: 1px solid colors.$context-separator;
   }
 
   ul {
@@ -24,7 +26,7 @@
     li {
       a {
         text-decoration: none;
-        color: $text;
+        color: colors.$text;
       }
     }
   }

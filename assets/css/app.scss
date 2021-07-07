@@ -1,3 +1,14 @@
+// There's a lot of stuff here that probably doesn't need to be on every page,
+// but we can clean it up later.
+@use "typography";
+@use "header";
+@use "main";
+@use "description";
+@use "roster";
+@use "messages";
+@use "tablelist";
+@use "editform";
+
 html {
   box-sizing: border-box;
 }
@@ -6,14 +17,6 @@ html {
 }
 
 /* This file is for your main application css. */
-@import "typography.css";
-@import "header.scss";
-@import "main.scss";
-@import "description.scss";
-@import "roster.scss";
-@import "messages.scss";
-@import "tablelist.scss";
-@import "editform.scss";
 
 body {
   margin: 0;
