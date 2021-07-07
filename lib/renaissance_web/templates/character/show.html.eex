@@ -1,15 +1,11 @@
-<h1><%= @character.name %></h1>
-
 <div class="description">
-  <%= @character.description %>
+  <h1><%= @character.name %></h1>
+  <%= for line <- String.split(@character.description, "\u2029") do %>
+    <p><%= line %></p>
+  <% end %>
 </div>
 
 <ul>
-  <li>
-    <strong>ID:</strong>
-    <%= @character.id %>
-  </li>
-
   <li>
     <strong>Admin:</strong>
     <%= link @character.admin, to: Routes.user_path(@conn, :show, @character.admin) %>

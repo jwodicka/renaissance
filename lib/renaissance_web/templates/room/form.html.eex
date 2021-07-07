@@ -10,7 +10,7 @@
   <%= error_tag f, :name %>
 
   <%= label f, :description %>
-  <%= textarea f, :description, value: String.replace(@changeset.data.description, "\u2029", "\n\n")%>
+  <%= textarea f, :description, value: RenaissanceText.newlineify_unicode(@changeset.data.description) %>
   <%= error_tag f, :description %>
 
   <div>
