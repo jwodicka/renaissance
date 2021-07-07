@@ -1,0 +1,18 @@
+form.edit {
+  display: grid;
+  grid-template-columns: 0fr 1fr;
+  gap: 1rem;
+
+  label {
+    grid-column: 1;
+  }
+
+  input, textarea {
+    grid-column: 2;
+  }
+
+  textarea {
+    height: 10em;
+  }
+
+}

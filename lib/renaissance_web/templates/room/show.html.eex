@@ -1,11 +1,12 @@
-<h1><%= @room.name %></h1>
-
 <div class="description">
-  <%= @room.description %>
+  <h1><%= @room.name %></h1>
+  <%= for line <- String.split(@room.description, "\u2029") do %>
+    <p><%= line %></p>
+  <% end %>
 </div>
 
 <div class="roster">
-  Characters:
+  <h2>Characters</h2>
   <ul>
   <%= for character <- @characters do %>
     <li><%= link character.name, to: Routes.character_path(@conn, :show, character) %></li>
@@ -13,11 +14,7 @@
   </ul>
 </div>
 
-<%= for message <- @messages do %>
-  <p><%= message %></p>
-<% end %>
-
-<%= render "send.html", Map.put(assigns, :action, Routes.room_path(@conn, :send, @room)) %>
+<%= render "send.html", Map.put(assigns, :send_action, Routes.room_path(@conn, :send, @room)) %>
 
 <div class="actions">
   <span><%= link "Edit", to: Routes.room_path(@conn, :edit, @room) %></span>

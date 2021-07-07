@@ -1,0 +1,31 @@
+.roster {
+
+  min-width: 20vw;
+
+  line-height: 1.5;
+  margin-bottom: 1rem;
+
+  background-color: $context-background;
+  padding: 0.25rem 0.5rem;
+
+  border-radius: 4px;
+
+  h2 {
+    font-size: 1rem;
+    margin: 0 0 0.25rem;
+    border-bottom: 1px solid $context-separator;
+  }
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      a {
+        text-decoration: none;
+        color: $text;
+      }
+    }
+  }
+}

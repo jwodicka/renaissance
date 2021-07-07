@@ -1,0 +1,36 @@
+.messages {
+  // background-color: $rp-lightblue;
+
+  p {
+    margin: 0;
+    padding: 0.1rem;
+
+    .sender {
+      float: right;
+      font-size: 0.8rem;
+      padding: 0.1rem 0.5rem;
+      border-radius: 1rem;
+      background-color: $rp-grey;
+    }
+  }
+  p:hover {
+    background-color: transparentize($rp-lightblue, .8);
+  }
+
+  form {
+    display: flex;
+
+    textarea {
+      flex: 1;
+      min-height: 1.5rem;
+      height: 3rem;
+    }
+    select {
+      flex: 0;
+    }
+    button {
+      flex: 0;
+    }
+
+  }
+}

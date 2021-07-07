@@ -1,5 +1,23 @@
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
 /* This file is for your main application css. */
-@import "./phoenix.css";
+@import "typography.css";
+@import "header.scss";
+@import "main.scss";
+@import "description.scss";
+@import "roster.scss";
+@import "messages.scss";
+@import "tablelist.scss";
+@import "editform.scss";
+
+body {
+  margin: 0;
+}
 
 /* Alerts and form errors */
 .alert {

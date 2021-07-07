@@ -1,4 +1,4 @@
-<%= form_for @changeset, @action, fn f -> %>
+<%= form_for @changeset, @action, [class: "edit"], fn f -> %>
   <%= if @changeset.action do %>
     <div class="alert alert-danger">
       <p>Oops, something went wrong! Please check the errors below.</p>
@@ -10,7 +10,7 @@
   <%= error_tag f, :name %>
 
   <%= label f, :description %>
-  <%= text_input f, :description %>
+  <%= textarea f, :description, value: String.replace(@changeset.data.description, "\u2029", "\n\n")%>
   <%= error_tag f, :description %>
 
   <div>

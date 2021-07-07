@@ -1,0 +1,13 @@
+// Palette from Renaissance Prologue album cover via colormind.io
+$rp-dark: #111923;
+$rp-cream: #edd4a5;
+$rp-grey: #909188;
+$rp-lightblue: #86b1cb;
+$rp-vividblue: #539ad5;
+
+$text: $rp-dark;
+$ui-background: lighten($rp-lightblue, 20%);
+$ui-border: $rp-grey;
+
+$context-background: lighten($rp-cream, 5%);
+$context-separator: darken($rp-cream, 10%);

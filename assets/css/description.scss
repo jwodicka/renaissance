@@ -1,0 +1,18 @@
+.description {
+  line-height: 1.5;
+  margin-bottom: 1rem;
+
+  background-color: $context-background;
+  padding: 0 0.5rem 0.25rem;
+
+  border-radius: 4px;
+
+  h1 {
+    font-size: 1.5rem;
+    border-bottom: 1px solid $context-separator;
+  }
+
+  p {
+    margin: 0.25rem 0;
+  }
+}

@@ -1,0 +1,10 @@
+table.list {
+  width: 100%;
+
+  td.truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 50vw; // I have no idea why I can't use percent here, but this will have to do for now.
+  }
+}
