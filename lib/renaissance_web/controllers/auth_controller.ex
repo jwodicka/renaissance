@@ -1,10 +1,8 @@
 defmodule RenaissanceWeb.AuthController do
   use RenaissanceWeb, :controller
-  alias RenaissanceWeb.Router.Helpers
 
   plug Ueberauth
 
-  alias Ueberauth.Strategy.Helpers
   alias Renaissance.Auth
 
   def logout(conn, _params) do
