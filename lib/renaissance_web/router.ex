@@ -39,6 +39,7 @@ defmodule RenaissanceWeb.Router do
 
     pipe_through :require_login
 
+    # TODO: Strip out the count subsystem
     get "/count", CountController, :index
     get "/logout", AuthController, :logout
 
