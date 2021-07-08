@@ -14,6 +14,18 @@
   </ul>
 </div>
 
+<div class="exits">
+  <h2>Exits</h2>
+  <ul>
+  <%# Or with empty map is handling the case where exits is uninitialized in DB.
+    This probably isn't necessary forever, but it's useful until we have more thorough validation.
+   %>
+  <%= for {exit_name, destination} <- @room.exits || %{} do %>
+    <li><%= link exit_name, to: Routes.room_path(@conn, :show, destination)  %>
+  <% end %>
+  </ul>
+</div>
+
 <%= render "send.html", Map.put(assigns, :send_action, Routes.room_path(@conn, :send, @room)) %>
 
 <div class="actions">

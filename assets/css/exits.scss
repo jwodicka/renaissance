@@ -1,10 +1,8 @@
 @use "block";
 @use "colors";
 
-.roster {
+.exits {
   @extend .block;
-
-  min-width: 20vw;
 
   padding: 0.25rem 0.5rem;
 
@@ -19,9 +17,13 @@
     padding: 0;
 
     li {
+      padding: 0.5rem 0;
       a {
         text-decoration: none;
         color: colors.$text;
+        border: 1px solid colors.$text;
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.25rem;
       }
     }
   }

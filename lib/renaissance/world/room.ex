@@ -7,9 +7,10 @@ defmodule Renaissance.World.Room do
 
   @primary_key {:id, :binary_id, autogenerate: true}
   schema "rooms" do
-    field :description, :string
     field :name, :string
+    field :description, :string
     field :characters, DynamoDBSet, default: []
+    field :exits, {:map, :string}, default: %{}
 
     timestamps()
   end
@@ -17,7 +18,7 @@ defmodule Renaissance.World.Room do
   @doc false
   def changeset(room, attrs) do
     room
-    |> cast(attrs, [:description, :name])
+    |> cast(attrs, [:description, :name, :exits])
     |> validate_required([:description, :name])
     |> update_change(:description, &Text.unicodify_newlines/1)
   end

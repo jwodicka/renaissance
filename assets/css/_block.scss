@@ -1,0 +1,15 @@
+@use "colors";
+
+.block {
+  line-height: 1.5;
+  margin-bottom: 1rem;
+
+  background-color: colors.$context-background;
+  padding: 0 0.5rem 0.25rem;
+
+  border-radius: 4px;
+
+  h1, h2, h3, h4, h5, h6 {
+    border-bottom: 1px solid colors.$context-separator;
+  }
+}
