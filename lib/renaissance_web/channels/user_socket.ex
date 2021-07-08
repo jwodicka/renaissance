@@ -1,6 +1,8 @@
 defmodule RenaissanceWeb.UserSocket do
   use Phoenix.Socket
 
+  channel "room:*", RenaissanceWeb.RoomChannel
+
   ## Channels
   # channel "room:*", RenaissanceWeb.RoomChannel
 
