@@ -17,6 +17,10 @@
     <%= @user.sysadmin %>
   </li>
 
+  <%= for instance <- @instances do %>
+    <li>Instance: <%= instance.instance_id %></li>
+  <% end %>
+
 </ul>
 
 <span><%= link "Edit", to: Routes.user_path(@conn, :edit, @user) %></span>

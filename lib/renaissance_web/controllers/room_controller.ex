@@ -30,7 +30,9 @@ defmodule RenaissanceWeb.RoomController do
 
   def show(conn, %{"id" => id}) do
     room = World.get_room!(id)
-    characters = Enum.map(room.characters, fn id -> World.get_character!(id) end)
+    instances = Renaissance.Embodiment.list_instances_for_room(id)
+    characters = Enum.map(instances, fn %{:characterid => id} -> World.get_character!(id) end)
+
     messages = case Transcript.list_messages_by_channel(id) do
       nil -> []
       m -> m
@@ -64,9 +66,7 @@ defmodule RenaissanceWeb.RoomController do
 
     final_params = message_params
       |> Map.put("channelid", id)
-      |> Map.put("timestamp", System.monotonic_time(:microsecond))
       |> Map.put("userid", conn.assigns.current_user.id)
-
 
     case Transcript.create_message(final_params) do
       {:ok, _message} ->

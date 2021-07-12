@@ -2,14 +2,12 @@ defmodule Renaissance.World.Room do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias Ecto.Adapters.DynamoDB.DynamoDBSet
   alias RenaissanceText, as: Text
 
   @primary_key {:id, :binary_id, autogenerate: true}
   schema "rooms" do
     field :name, :string
     field :description, :string
-    field :characters, DynamoDBSet, default: []
     field :exits, {:map, :string}, default: %{}
 
     timestamps()

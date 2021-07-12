@@ -20,7 +20,14 @@
     <%= error_tag f, :content %>
 
     <%# <%= label f, :characterid, "Character" %>
-    <%= select f, :characterid, Enum.map(@characters, &{&1.name, &1.id}) %>
+    <%= case length @characters do %>
+      <%= 1 -> %>
+        <% character = hd(@characters) %>
+        <% IO.puts inspect(character) %>
+        <%= hidden_input f, :characterid, value: character.id %>
+      <% _ -> %>
+        <%= select f, :characterid, Enum.map(@characters, &{&1.name, &1.id}) %>
+    <% end %>
     <%= error_tag f, :characterid %>
 
     <%= submit "Send" %>

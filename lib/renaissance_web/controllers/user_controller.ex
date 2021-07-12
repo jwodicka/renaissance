@@ -28,7 +28,9 @@ defmodule RenaissanceWeb.UserController do
 
   def show(conn, %{"id" => id}) do
     user = Auth.get_user!(id)
-    render(conn, "show.html", user: user)
+    instances = Renaissance.Embodiment.list_instances_for_user(id)
+
+    render(conn, "show.html", user: user, instances: instances)
   end
 
   def edit(conn, %{"id" => id}) do

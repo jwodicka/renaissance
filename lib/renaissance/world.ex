@@ -37,6 +37,8 @@ defmodule Renaissance.World do
   """
   def get_room!(id), do: Repo.get!(Room, id)
 
+  def get_room_for(%Renaissance.Embodiment.Instance{roomid: roomid}), do: get_room!(roomid)
+
   @doc """
   Creates a room.
 

@@ -1,0 +1,37 @@
+<h1>Listing Embodiment instances</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Userid</th>
+      <th>Characterid</th>
+      <th>Roomid</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for instance <- @embodiment_instances do %>
+    <tr>
+      <td><%= instance.userid %></td>
+      <td><%= instance.characterid %></td>
+      <td><%= instance.roomid %></td>
+
+      <td>
+        <span><%= link "Show", to: "/" %></span>
+        <span><%= link "Edit", to: "/" %></span>
+        <span><%= link "Delete", to: "/", method: :delete, data: [confirm: "Are you sure?"] %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<%#
+Routes.instance_path(@conn, :show, instance)
+Routes.instance_path(@conn, :edit, instance)
+Routes.instance_path(@conn, :delete, instance)
+%>
+
+
+<%# <span><%= link "New Instance", to: Routes.instance_path(@conn, :new) % ></span> %>

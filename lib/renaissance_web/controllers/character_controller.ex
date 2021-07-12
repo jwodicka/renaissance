@@ -4,6 +4,7 @@ defmodule RenaissanceWeb.CharacterController do
   alias Renaissance.World
   alias Renaissance.Auth.User
   alias Renaissance.World.Character
+  alias Renaissance.Embodiment
 
   def index(conn, _params) do
     characters = World.list_characters()
@@ -29,9 +30,23 @@ defmodule RenaissanceWeb.CharacterController do
     end
   end
 
+  defp annotate_with_room_name(instance = %Embodiment.Instance{}) do
+    room = World.get_room!(instance.roomid)
+
+    instance
+    |> Map.from_struct()
+    |> Map.put(:room_name, room.name)
+  end
+
   def show(conn, %{"id" => id}) do
     character = World.get_character!(id)
-    render(conn, "show.html", character: character)
+
+    # Annotate each instance with the name of its room.
+    instances = Embodiment.list_instances_for_character(id)
+      |> Enum.map(&annotate_with_room_name/1)
+
+    IO.puts("char instances " <> inspect(instances))
+    render(conn, "show.html", character: character, instances: instances)
   end
 
   def edit(conn, %{"id" => id}) do

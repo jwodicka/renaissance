@@ -5,6 +5,15 @@
   <% end %>
 </div>
 
+<div class="instances">
+  <h2>Instances</h2>
+  <%= for instance <- @instances do %>
+    <%# This knows WAAAAY too much about the routing. Extract to Routes helper somehow. %>
+    <% instance_link = "/instances/#{instance.id}/#{instance.instance_id}" %>
+    <p><%= link instance.room_name, to: instance_link %></p>
+  <% end %>
+</div>
+
 <ul>
   <li>
     <strong>Admin:</strong>

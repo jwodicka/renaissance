@@ -7,21 +7,23 @@ defmodule Renaissance.Transcript.Message do
   @primary_key {:channelid, :string, autogenerate: false}
   @foreign_key_type :binary_id
   schema "messages" do
-    field :timestamp, :integer # Range key
-
     field :characterid, :string
     field :userid, :string
 
     field :content, :string
 
-    timestamps()
+    timestamps(
+      inserted_at: :timestamp, # Range key
+      updated_at: false,
+      type: :naive_datetime_usec
+    )
   end
 
   @doc false
   def changeset(message, attrs) do
     message
-    |> cast(attrs, [:channelid, :timestamp, :characterid, :userid, :content])
-    |> validate_required([:channelid, :timestamp, :characterid, :userid, :content])
+    |> cast(attrs, [:channelid, :characterid, :userid, :content])
+    |> validate_required([:channelid, :characterid, :userid, :content])
   end
 end
 

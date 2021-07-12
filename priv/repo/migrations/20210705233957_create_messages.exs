@@ -9,7 +9,7 @@ defmodule Renaissance.Repo.Migrations.CreateMessages do
       ]
     ) do
       add :channelid, :string, primary_key: true
-      add :timestamp, :number, range_key: true
+      add :timestamp, :string, range_key: true
     end
 
   end
