@@ -3,6 +3,7 @@ defmodule RenaissanceText do
   def utf_ps() do "\u2029" end
 
   @spec unicodify_newlines(binary) :: binary
+  def unicodify_newlines(nil) do nil end
   def unicodify_newlines(str) do
     Regex.replace(~r/[\r\n]+/, str, utf_ps())
   end
