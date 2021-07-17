@@ -24,3 +24,6 @@ config :renaissance, Renaissance.Repo,
     port: 8000,
     region: "us-west-2"
   ]
+
+# The Ecto DynamoDB adapter uses its own logging, so we'll disable it.
+config :ecto_adapters_dynamodb, log_levels: []
