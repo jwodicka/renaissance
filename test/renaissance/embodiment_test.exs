@@ -7,7 +7,7 @@ defmodule Renaissance.EmbodimentTest do
     alias Renaissance.Embodiment.Instance
 
     @valid_attrs %{characterid: "some characterid", roomid: "some roomid", userid: "some userid"}
-    @update_attrs %{characterid: "some updated characterid", roomid: "some updated roomid", userid: "some updated userid"}
+    @update_attrs %{roomid: "some updated roomid"}
     @invalid_attrs %{characterid: nil, roomid: nil, userid: nil}
 
     def instance_fixture(attrs \\ %{}) do
@@ -43,9 +43,7 @@ defmodule Renaissance.EmbodimentTest do
     test "update_instance/2 with valid data updates the instance" do
       instance = instance_fixture()
       assert {:ok, %Instance{} = instance} = Embodiment.update_instance(instance, @update_attrs)
-      assert instance.characterid == "some updated characterid"
       assert instance.roomid == "some updated roomid"
-      assert instance.userid == "some updated userid"
     end
 
     test "update_instance/2 with invalid data returns error changeset" do
