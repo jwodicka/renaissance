@@ -31,7 +31,30 @@ defmodule RenaissanceWeb.ConnCase do
     end
   end
 
-  setup _tags do
-    {:ok, conn: Phoenix.ConnTest.build_conn()}
+  @standard_user %Renaissance.Auth.User{
+    id: "some fake id",
+    authid: "test_user_standard",
+    name: "Standard User",
+    sysadmin: false
+  }
+  @sysadmin_user %Renaissance.Auth.User{
+    id: "a different fake id",
+    authid: "test_user_admin",
+    name: "Admin User",
+    sysadmin: true
+  }
+
+  def standard_user, do: @standard_user
+
+  setup tags do
+    conn = Phoenix.ConnTest.build_conn()
+
+    conn = case tags[:auth] do
+      true -> Plug.Test.init_test_session(conn, current_user: @standard_user)
+      :admin -> Plug.Test.init_test_session(conn, current_user: @sysadmin_user)
+      nil -> conn
+    end
+
+    {:ok, conn: conn}
   end
 end

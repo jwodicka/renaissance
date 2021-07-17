@@ -3,14 +3,20 @@ defmodule RenaissanceWeb.CharacterControllerTest do
 
   alias Renaissance.World
 
-  @create_attrs %{admin: "some admin", description: "some description", name: "some name"}
-  @update_attrs %{admin: "some updated admin", description: "some updated description", name: "some updated name"}
+  @create_attrs %{admin: standard_user().id, description: "some description", name: "some name"}
+  @update_attrs %{description: "some updated description", name: "some updated name"}
   @invalid_attrs %{admin: nil, description: nil, name: nil}
 
   def fixture(:character) do
     {:ok, character} = World.create_character(@create_attrs)
     character
   end
+
+  @moduletag :auth
+  # TODO: Add tests that handle interactions from:
+  # - an admin user
+  # - a user who is not the character's owner
+  # - a user who is not logged in
 
   describe "index" do
     test "lists all characters", %{conn: conn} do
@@ -34,7 +40,7 @@ defmodule RenaissanceWeb.CharacterControllerTest do
       assert redirected_to(conn) == Routes.character_path(conn, :show, id)
 
       conn = get(conn, Routes.character_path(conn, :show, id))
-      assert html_response(conn, 200) =~ "Show Character"
+      assert html_response(conn, 200) =~ @create_attrs.name
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
@@ -60,7 +66,7 @@ defmodule RenaissanceWeb.CharacterControllerTest do
       assert redirected_to(conn) == Routes.character_path(conn, :show, character)
 
       conn = get(conn, Routes.character_path(conn, :show, character))
-      assert html_response(conn, 200) =~ "some updated admin"
+      assert html_response(conn, 200) =~ @update_attrs.name
     end
 
     test "renders errors when data is invalid", %{conn: conn, character: character} do
