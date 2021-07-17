@@ -23,39 +23,60 @@ defmodule Renaissance.DataCase do
       import Ecto.Query
       import Renaissance.DataCase
 
-      setup do
-        alias ExAws.Dynamo
-        import Ecto.Adapters.DynamoDB
+      setup_all [:get_aws_config, :get_table_info]
+      setup [:purge_all_tables]
 
-        # Probably we can read this config once as we're starting up the tests.
-        config = Ecto.Adapters.DynamoDB.ex_aws_config(Renaissance.Repo)
-        %{"TableNames" => tables} = Dynamo.list_tables() |> ExAws.request!(config)
+      defp get_aws_config(_context) do
+        [aws_config: Ecto.Adapters.DynamoDB.ex_aws_config(Renaissance.Repo)]
+      end
 
-        for table <- tables, table != "schema_migrations" do
-          %{"Table" => %{"KeySchema" => keyschema}} = Dynamo.describe_table(table) |> ExAws.request!(config)
-          options = case keyschema do
-            [
-              %{"AttributeName" => hashkey, "KeyType" => "HASH"}
-            ] -> [projection_expression: "#{hashkey}"]
+      defp get_table_options(table, config) do
+        %{"Table" => %{"KeySchema" => keyschema}} =
+          ExAws.Dynamo.describe_table(table) |> ExAws.request!(config)
+        case keyschema do
+          [
+            %{"AttributeName" => hashkey, "KeyType" => "HASH"}
+          ] -> [projection_expression: "#{hashkey}"]
 
-            [ # 'timestamp' is a reserved word, so we need to be slightly fancier here.
-              %{"AttributeName" => hashkey, "KeyType" => "HASH"},
-              %{"AttributeName" => "timestamp", "KeyType" => "RANGE"}
-            ] -> [
-              projection_expression: "#{hashkey}, #timestamp_key",
-              expression_attribute_names: %{"#timestamp_key" => "timestamp"}
-            ]
+          [ # 'timestamp' is a reserved word, so we need to be slightly fancier here.
+            %{"AttributeName" => hashkey, "KeyType" => "HASH"},
+            %{"AttributeName" => "timestamp", "KeyType" => "RANGE"}
+          ] -> [
+            projection_expression: "#{hashkey}, #timestamp_key",
+            expression_attribute_names: %{"#timestamp_key" => "timestamp"}
+          ]
 
-            [
-              %{"AttributeName" => hashkey, "KeyType" => "HASH"},
-              %{"AttributeName" => rangekey, "KeyType" => "RANGE"}
-            ] -> [projection_expression: "#{hashkey}, #{rangekey}"]
-          end
+          [
+            %{"AttributeName" => hashkey, "KeyType" => "HASH"},
+            %{"AttributeName" => rangekey, "KeyType" => "RANGE"}
+          ] -> [projection_expression: "#{hashkey}, #{rangekey}"]
+        end
+      end
 
-          %{"Count" => count, "Items" => records} = Dynamo.scan(table, options) |> ExAws.request!(config)
+      defp get_table_info(context) do
+        config = context[:aws_config]
+        %{"TableNames" => tables} = ExAws.Dynamo.list_tables() |> ExAws.request!(config)
+
+        # Ignore the schema_migrations table, since it's not a real table
+        tables = Enum.reject(tables, &(&1 == "schema_migrations"))
+
+        table_opts = Map.new(tables, fn table -> {table, get_table_options(table, config)} end)
+
+        [table_list: tables, table_opts: table_opts]
+      end
+
+      defp purge_all_tables(context) do
+        config = context[:aws_config]
+        tables = context[:table_list]
+        table_opts = context[:table_opts]
+
+        for table <- tables do
+          options = table_opts[table]
+
+          %{"Count" => count, "Items" => records} = ExAws.Dynamo.scan(table, options) |> ExAws.request!(config)
           for record <- records do
             record = ExAws.Dynamo.Decoder.decode(record)
-            Dynamo.delete_item(table, record, options) |> ExAws.request!(config)
+            ExAws.Dynamo.delete_item(table, record, options) |> ExAws.request!(config)
           end
         end
 
