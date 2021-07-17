@@ -27,7 +27,6 @@ defmodule Renaissance.User do
 
   @spec find_by_authid(any) :: any
   def find_by_authid(authid) do
-    IO.puts(authid)
     Renaissance.Repo.get(Renaissance.User, authid)
   end
 

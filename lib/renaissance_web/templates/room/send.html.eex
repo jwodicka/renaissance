@@ -23,7 +23,6 @@
     <%= case length @characters do %>
       <%= 1 -> %>
         <% character = hd(@characters) %>
-        <% IO.puts inspect(character) %>
         <%= hidden_input f, :characterid, value: character.id %>
       <% _ -> %>
         <%= select f, :characterid, Enum.map(@characters, &{&1.name, &1.id}) %>

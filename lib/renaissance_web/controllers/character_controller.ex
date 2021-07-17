@@ -45,7 +45,6 @@ defmodule RenaissanceWeb.CharacterController do
     instances = Embodiment.list_instances_for_character(id)
       |> Enum.map(&annotate_with_room_name/1)
 
-    IO.puts("char instances " <> inspect(instances))
     render(conn, "show.html", character: character, instances: instances)
   end
 

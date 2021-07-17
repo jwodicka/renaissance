@@ -17,7 +17,7 @@ config :renaissance, Renaissance.Repo,
   region: "us-west-2",
   dynamodb_local: true,
   scan_tables: ["schema_migrations"], # Because scans are expensive, we must opt into them.
-  debug_requests: true, # ExAws option to enable debug on aws http request.
+  debug_requests: false, # ExAws option to enable debug on aws http request.
   dynamodb: [
     scheme: "http://",
     host: "localhost",
