@@ -6,9 +6,9 @@ defmodule Renaissance.TranscriptTest do
   describe "messages" do
     alias Renaissance.Transcript.Message
 
-    @valid_attrs %{characterid: "some characterid", content: "some content", timestamp: 42, userid: "some userid"}
-    @update_attrs %{characterid: "some updated characterid", content: "some updated content", timestamp: 43, userid: "some updated userid"}
-    @invalid_attrs %{characterid: nil, content: nil, timestamp: nil, userid: nil}
+    @valid_attrs %{channelid: "some channelid", characterid: "some characterid", content: "some content", userid: "some userid"}
+    @update_attrs %{characterid: "some updated characterid", content: "some updated content", userid: "some updated userid"}
+    @invalid_attrs %{channelid: nil, characterid: nil, content: nil, userid: nil}
 
     def message_fixture(attrs \\ %{}) do
       {:ok, message} =
@@ -19,21 +19,22 @@ defmodule Renaissance.TranscriptTest do
       message
     end
 
-    test "list_messages/0 returns all messages" do
+    test "list_messages_by_channel/1 returns all messages for that channel" do
       message = message_fixture()
-      assert Transcript.list_messages() == [message]
+      assert Transcript.list_messages_by_channel(message.channelid) == [message]
     end
 
-    test "get_message!/1 returns the message with given id" do
+    test "get_message!/2 returns the message with given id and timestamp" do
       message = message_fixture()
-      assert Transcript.get_message!(message.id) == message
+      assert Transcript.get_message!(message.channelid, message.sentat) == message
     end
 
     test "create_message/1 with valid data creates a message" do
       assert {:ok, %Message{} = message} = Transcript.create_message(@valid_attrs)
+      assert message.channelid == "some channelid"
       assert message.characterid == "some characterid"
       assert message.content == "some content"
-      assert message.timestamp == 42
+      # TODO - assert message.sentat is not nil
       assert message.userid == "some userid"
     end
 
@@ -41,25 +42,10 @@ defmodule Renaissance.TranscriptTest do
       assert {:error, %Ecto.Changeset{}} = Transcript.create_message(@invalid_attrs)
     end
 
-    test "update_message/2 with valid data updates the message" do
-      message = message_fixture()
-      assert {:ok, %Message{} = message} = Transcript.update_message(message, @update_attrs)
-      assert message.characterid == "some updated characterid"
-      assert message.content == "some updated content"
-      assert message.timestamp == 43
-      assert message.userid == "some updated userid"
-    end
-
-    test "update_message/2 with invalid data returns error changeset" do
-      message = message_fixture()
-      assert {:error, %Ecto.Changeset{}} = Transcript.update_message(message, @invalid_attrs)
-      assert message == Transcript.get_message!(message.id)
-    end
-
     test "delete_message/1 deletes the message" do
       message = message_fixture()
       assert {:ok, %Message{}} = Transcript.delete_message(message)
-      assert_raise Ecto.NoResultsError, fn -> Transcript.get_message!(message.id) end
+      assert_raise Ecto.NoResultsError, fn -> Transcript.get_message!(message.channelid, message.sentat) end
     end
 
     test "change_message/1 returns a message changeset" do

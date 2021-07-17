@@ -13,7 +13,7 @@ defmodule Renaissance.Transcript.Message do
     field :content, :string
 
     timestamps(
-      inserted_at: :timestamp, # Range key
+      inserted_at: :sentat, # Range key
       updated_at: false,
       type: :naive_datetime_usec
     )

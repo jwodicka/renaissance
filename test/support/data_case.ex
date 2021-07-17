@@ -38,14 +38,6 @@ defmodule Renaissance.DataCase do
             %{"AttributeName" => hashkey, "KeyType" => "HASH"}
           ] -> [projection_expression: "#{hashkey}"]
 
-          [ # 'timestamp' is a reserved word, so we need to be slightly fancier here.
-            %{"AttributeName" => hashkey, "KeyType" => "HASH"},
-            %{"AttributeName" => "timestamp", "KeyType" => "RANGE"}
-          ] -> [
-            projection_expression: "#{hashkey}, #timestamp_key",
-            expression_attribute_names: %{"#timestamp_key" => "timestamp"}
-          ]
-
           [
             %{"AttributeName" => hashkey, "KeyType" => "HASH"},
             %{"AttributeName" => rangekey, "KeyType" => "RANGE"}
@@ -76,7 +68,7 @@ defmodule Renaissance.DataCase do
           %{"Count" => count, "Items" => records} = ExAws.Dynamo.scan(table, options) |> ExAws.request!(config)
           for record <- records do
             record = ExAws.Dynamo.Decoder.decode(record)
-            ExAws.Dynamo.delete_item(table, record, options) |> ExAws.request!(config)
+            ExAws.Dynamo.delete_item(table, record) |> ExAws.request!(config)
           end
         end
 
