@@ -7,7 +7,6 @@ defmodule Renaissance.TranscriptTest do
     alias Renaissance.Transcript.Message
 
     @valid_attrs %{channelid: "some channelid", characterid: "some characterid", content: "some content", userid: "some userid"}
-    @update_attrs %{characterid: "some updated characterid", content: "some updated content", userid: "some updated userid"}
     @invalid_attrs %{channelid: nil, characterid: nil, content: nil, userid: nil}
 
     def message_fixture(attrs \\ %{}) do
