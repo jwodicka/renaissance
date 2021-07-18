@@ -12,6 +12,8 @@ defmodule RenaissanceWeb.RoomControllerTest do
     room
   end
 
+  @moduletag :auth
+
   describe "index" do
     test "lists all rooms", %{conn: conn} do
       conn = get(conn, Routes.room_path(conn, :index))
@@ -34,7 +36,7 @@ defmodule RenaissanceWeb.RoomControllerTest do
       assert redirected_to(conn) == Routes.room_path(conn, :show, id)
 
       conn = get(conn, Routes.room_path(conn, :show, id))
-      assert html_response(conn, 200) =~ "Show Room"
+      assert html_response(conn, 200) =~ @create_attrs.name
     end
 
     test "renders errors when data is invalid", %{conn: conn} do

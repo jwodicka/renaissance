@@ -12,6 +12,8 @@ defmodule RenaissanceWeb.UserControllerTest do
     user
   end
 
+  @moduletag :auth
+
   describe "index" do
     test "lists all users", %{conn: conn} do
       conn = get(conn, Routes.user_path(conn, :index))
