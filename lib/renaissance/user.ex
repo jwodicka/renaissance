@@ -11,7 +11,7 @@ defmodule Renaissance.User do
     timestamps()
   end
 
-  @spec find_or_create(String.t, String.t) :: {:ok, User} | {:error, term}
+  @spec find_or_create(String.t(), String.t()) :: {:ok, User} | {:error, term}
   def find_or_create(authid, name) do
     case find_by_authid(authid) do
       nil -> create(%{authid: authid, name: name})

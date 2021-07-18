@@ -77,6 +77,7 @@ defmodule RenaissanceWeb.RoomControllerTest do
     test "deletes chosen room", %{conn: conn, room: room} do
       conn = delete(conn, Routes.room_path(conn, :delete, room))
       assert redirected_to(conn) == Routes.room_path(conn, :index)
+
       assert_error_sent 404, fn ->
         get(conn, Routes.room_path(conn, :show, room))
       end

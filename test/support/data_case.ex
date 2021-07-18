@@ -33,15 +33,18 @@ defmodule Renaissance.DataCase do
       defp get_table_options(table, config) do
         %{"Table" => %{"KeySchema" => keyschema}} =
           ExAws.Dynamo.describe_table(table) |> ExAws.request!(config)
+
         case keyschema do
           [
             %{"AttributeName" => hashkey, "KeyType" => "HASH"}
-          ] -> [projection_expression: "#{hashkey}"]
+          ] ->
+            [projection_expression: "#{hashkey}"]
 
           [
             %{"AttributeName" => hashkey, "KeyType" => "HASH"},
             %{"AttributeName" => rangekey, "KeyType" => "RANGE"}
-          ] -> [projection_expression: "#{hashkey}, #{rangekey}"]
+          ] ->
+            [projection_expression: "#{hashkey}, #{rangekey}"]
         end
       end
 
@@ -65,7 +68,9 @@ defmodule Renaissance.DataCase do
         for table <- tables do
           options = table_opts[table]
 
-          %{"Count" => count, "Items" => records} = ExAws.Dynamo.scan(table, options) |> ExAws.request!(config)
+          %{"Count" => count, "Items" => records} =
+            ExAws.Dynamo.scan(table, options) |> ExAws.request!(config)
+
           for record <- records do
             record = ExAws.Dynamo.Decoder.decode(record)
             ExAws.Dynamo.delete_item(table, record) |> ExAws.request!(config)

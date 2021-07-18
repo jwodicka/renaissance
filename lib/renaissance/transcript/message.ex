@@ -13,7 +13,8 @@ defmodule Renaissance.Transcript.Message do
     field :content, :string
 
     timestamps(
-      inserted_at: :sentat, # Range key
+      # Range key
+      inserted_at: :sentat,
       updated_at: false,
       type: :naive_datetime_usec
     )
@@ -29,6 +30,7 @@ end
 
 defimpl Phoenix.HTML.Safe, for: Renaissance.Transcript.Message do
   def to_iodata(message) do
-    message.content # TODO: THIS IS NOT SAFE. WE ARE NOT DOING ANYTHING TO MAKE IT SAFE.
+    # TODO: THIS IS NOT SAFE. WE ARE NOT DOING ANYTHING TO MAKE IT SAFE.
+    message.content
   end
 end

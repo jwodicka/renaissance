@@ -47,7 +47,12 @@ defmodule RenaissanceWeb.Router do
     post "/rooms/:room/send", RoomController, :send
     resources "/characters", CharacterController
     resources "/users", UserController
-    resources "/instances", InstanceController, only: [:index, :new, :create], name: "uc", param: "id" do
+
+    resources("/instances", InstanceController,
+      only: [:index, :new, :create],
+      name: "uc",
+      param: "id"
+    ) do
       resources "/", InstanceController, param: "iid"
       get "/:iid/move_to/:roomid", InstanceController, :move_to_room
     end

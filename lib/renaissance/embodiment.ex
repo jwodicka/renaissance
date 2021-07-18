@@ -104,28 +104,36 @@ defmodule Renaissance.Embodiment do
 
   def list_instances_for(record) do
     case record do
-      %Renaissance.World.Room{id: room_id} -> list_instances_for_room(room_id)
-      %Renaissance.World.Character{id: character_id} -> list_instances_for_character(character_id)
-      %Renaissance.Auth.User{id: user_id} -> list_instances_for_user(user_id)
-      # TODO - raise an error if record is not a recognized type
+      %Renaissance.World.Room{id: room_id} ->
+        list_instances_for_room(room_id)
+
+      %Renaissance.World.Character{id: character_id} ->
+        list_instances_for_character(character_id)
+
+      %Renaissance.Auth.User{id: user_id} ->
+        list_instances_for_user(user_id)
+        # TODO - raise an error if record is not a recognized type
     end
   end
 
   def list_instances_for_user(userid) do
     Instance
     |> Ecto.Query.where(userid: ^userid)
-    |> Repo.all(scan: true) # TODO - add an index and remove scan here.
+    # TODO - add an index and remove scan here.
+    |> Repo.all(scan: true)
   end
 
   def list_instances_for_room(roomid) do
     Instance
     |> Ecto.Query.where(roomid: ^roomid)
-    |> Repo.all(scan: true) # TODO - add an index and remove scan here.
+    # TODO - add an index and remove scan here.
+    |> Repo.all(scan: true)
   end
 
   def list_instances_for_character(characterid) do
     Instance
     |> Ecto.Query.where(characterid: ^characterid)
-    |> Repo.all(scan: true) # TODO - add an index and remove scan here.
+    # TODO - add an index and remove scan here.
+    |> Repo.all(scan: true)
   end
 end

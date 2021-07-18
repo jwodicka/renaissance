@@ -6,7 +6,12 @@ defmodule Renaissance.TranscriptTest do
   describe "messages" do
     alias Renaissance.Transcript.Message
 
-    @valid_attrs %{channelid: "some channelid", characterid: "some characterid", content: "some content", userid: "some userid"}
+    @valid_attrs %{
+      channelid: "some channelid",
+      characterid: "some characterid",
+      content: "some content",
+      userid: "some userid"
+    }
     @invalid_attrs %{channelid: nil, characterid: nil, content: nil, userid: nil}
 
     def message_fixture(attrs \\ %{}) do
@@ -44,7 +49,10 @@ defmodule Renaissance.TranscriptTest do
     test "delete_message/1 deletes the message" do
       message = message_fixture()
       assert {:ok, %Message{}} = Transcript.delete_message(message)
-      assert_raise Ecto.NoResultsError, fn -> Transcript.get_message!(message.channelid, message.sentat) end
+
+      assert_raise Ecto.NoResultsError, fn ->
+        Transcript.get_message!(message.channelid, message.sentat)
+      end
     end
 
     test "change_message/1 returns a message changeset" do

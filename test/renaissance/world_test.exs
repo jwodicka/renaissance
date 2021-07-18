@@ -68,7 +68,11 @@ defmodule Renaissance.WorldTest do
     alias Renaissance.World.Character
 
     @valid_attrs %{admin: "some admin", description: "some description", name: "some name"}
-    @update_attrs %{admin: "some updated admin", description: "some updated description", name: "some updated name"}
+    @update_attrs %{
+      admin: "some updated admin",
+      description: "some updated description",
+      name: "some updated name"
+    }
     @invalid_attrs %{admin: nil, description: nil, name: nil}
 
     def character_fixture(attrs \\ %{}) do

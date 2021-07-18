@@ -33,12 +33,20 @@ defmodule RenaissanceWeb.RoomController do
     instances = Renaissance.Embodiment.list_instances_for_room(id)
     characters = Enum.map(instances, fn %{:characterid => id} -> World.get_character!(id) end)
 
-    messages = case Transcript.list_messages_by_channel(id) do
-      nil -> []
-      m -> m
-    end
+    messages =
+      case Transcript.list_messages_by_channel(id) do
+        nil -> []
+        m -> m
+      end
+
     changeset = Transcript.change_message(%Message{})
-    render(conn, "show.html", room: room, characters: characters, messages: messages, changeset: changeset)
+
+    render(conn, "show.html",
+      room: room,
+      characters: characters,
+      messages: messages,
+      changeset: changeset
+    )
   end
 
   def edit(conn, %{"id" => id}) do
@@ -64,7 +72,8 @@ defmodule RenaissanceWeb.RoomController do
   def send(conn, %{"room" => id, "message" => message_params}) do
     room = World.get_room!(id)
 
-    final_params = message_params
+    final_params =
+      message_params
       |> Map.put("channelid", id)
       |> Map.put("userid", conn.assigns.current_user.id)
 
@@ -76,11 +85,19 @@ defmodule RenaissanceWeb.RoomController do
 
       {:error, %Ecto.Changeset{} = changeset} ->
         characters = Enum.map(room.characters, fn id -> World.get_character!(id) end)
-        messages = case Transcript.list_messages_by_channel(id) do
-          nil -> []
-          m -> m
-        end
-        render(conn, "show.html", room: room, characters: characters, messages: messages, changeset: changeset)
+
+        messages =
+          case Transcript.list_messages_by_channel(id) do
+            nil -> []
+            m -> m
+          end
+
+        render(conn, "show.html",
+          room: room,
+          characters: characters,
+          messages: messages,
+          changeset: changeset
+        )
     end
   end
 

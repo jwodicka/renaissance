@@ -5,7 +5,6 @@ defmodule RenaissanceWeb.InstanceController do
   alias Renaissance.Embodiment.Instance
   alias Renaissance.World
 
-
   def index(conn, _params) do
     embodiment_instances = Embodiment.list_embodiment_instances()
     render(conn, "index.html", embodiment_instances: embodiment_instances)
@@ -32,17 +31,22 @@ defmodule RenaissanceWeb.InstanceController do
     instance = Embodiment.get_instance!(id)
     render(conn, "show.html", instance: instance)
   end
+
   def show(conn, %{"uc_id" => ucid, "iid" => iid}) do
     instance = Embodiment.get_instance!(ucid, iid)
 
     room = World.get_room_for(instance)
     room_instances = Embodiment.list_instances_for(room)
-    characters = Enum.map(room_instances, fn %{:characterid => id} -> World.get_character!(id) end)
 
-    messages = case Renaissance.Transcript.list_messages_by_channel(room.id) do
-      nil -> []
-      m -> m
-    end
+    characters =
+      Enum.map(room_instances, fn %{:characterid => id} -> World.get_character!(id) end)
+
+    messages =
+      case Renaissance.Transcript.list_messages_by_channel(room.id) do
+        nil -> []
+        m -> m
+      end
+
     changeset = Renaissance.Transcript.change_message(%Renaissance.Transcript.Message{})
 
     render(conn, "show.html",
@@ -50,7 +54,8 @@ defmodule RenaissanceWeb.InstanceController do
       room: room,
       characters: characters,
       messages: messages,
-      changeset: changeset)
+      changeset: changeset
+    )
   end
 
   def edit(conn, %{"id" => id}) do
@@ -61,16 +66,19 @@ defmodule RenaissanceWeb.InstanceController do
 
   def move_to_room(conn, %{"uc_id" => ucid, "iid" => iid, "roomid" => roomid}) do
     instance = Embodiment.get_instance!(ucid, iid)
+
     case Embodiment.update_instance(instance, %{roomid: roomid}) do
       {:ok, _} ->
         # This knows WAAAAY too much about the routing. Extract to Routes helper somehow.
         instance_link = "/instances/#{ucid}/#{iid}"
+
         conn
         |> put_flash(:info, "Instance updated successfully.")
         |> redirect(to: instance_link)
 
       {:error, _} ->
         instance_link = "/instances/#{ucid}/#{iid}"
+
         conn
         |> put_flash(:info, "Something bad happened.")
         |> redirect(to: instance_link)

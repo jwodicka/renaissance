@@ -49,11 +49,12 @@ defmodule RenaissanceWeb.ConnCase do
   setup tags do
     conn = Phoenix.ConnTest.build_conn()
 
-    conn = case tags[:auth] do
-      true -> Plug.Test.init_test_session(conn, current_user: @standard_user)
-      :admin -> Plug.Test.init_test_session(conn, current_user: @sysadmin_user)
-      nil -> conn
-    end
+    conn =
+      case tags[:auth] do
+        true -> Plug.Test.init_test_session(conn, current_user: @standard_user)
+        :admin -> Plug.Test.init_test_session(conn, current_user: @sysadmin_user)
+        nil -> conn
+      end
 
     {:ok, conn: conn}
   end

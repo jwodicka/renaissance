@@ -81,6 +81,7 @@ defmodule RenaissanceWeb.CharacterControllerTest do
     test "deletes chosen character", %{conn: conn, character: character} do
       conn = delete(conn, Routes.character_path(conn, :delete, character))
       assert redirected_to(conn) == Routes.character_path(conn, :index)
+
       assert_error_sent 404, fn ->
         get(conn, Routes.character_path(conn, :show, character))
       end
