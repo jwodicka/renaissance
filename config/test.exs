@@ -23,7 +23,8 @@ config :renaissance, Renaissance.Repo,
   dynamodb: [
     scheme: "http://",
     host: "localhost",
-    port: 8000,
+    # This is a different port than dev uses, so we can test without wiping the local DB constantly.
+    port: 8008,
     region: "us-west-2"
   ]
 
