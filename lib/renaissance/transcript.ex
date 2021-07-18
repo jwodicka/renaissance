@@ -37,7 +37,7 @@ defmodule Renaissance.Transcript do
       ** (Ecto.NoResultsError)
 
   """
-  def get_message!(id), do: Repo.get!(Message, id)
+  def get_message!(channel, sentat), do: Repo.get_by!(Message, channelid: channel, sentat: sentat)
 
   @doc """
   Creates a message.

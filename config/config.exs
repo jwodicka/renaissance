@@ -28,7 +28,7 @@ config :phoenix, :json_library, Jason
 
 config :ueberauth, Ueberauth,
   providers: [
-    auth0: { Ueberauth.Strategy.Auth0, [] },
+    auth0: {Ueberauth.Strategy.Auth0, []}
   ]
 
 config :ueberauth, Ueberauth.Strategy.Auth0.OAuth,

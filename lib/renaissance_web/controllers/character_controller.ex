@@ -42,10 +42,10 @@ defmodule RenaissanceWeb.CharacterController do
     character = World.get_character!(id)
 
     # Annotate each instance with the name of its room.
-    instances = Embodiment.list_instances_for_character(id)
+    instances =
+      Embodiment.list_instances_for_character(id)
       |> Enum.map(&annotate_with_room_name/1)
 
-    IO.puts("char instances " <> inspect(instances))
     render(conn, "show.html", character: character, instances: instances)
   end
 
@@ -120,6 +120,4 @@ defmodule RenaissanceWeb.CharacterController do
   # Commented out for now so it's easier to test access from my sysadmin account.
   # defp can_edit?(%User{sysadmin: true}, %Character{}), do: true
   defp can_edit?(%User{}, %Character{}), do: false
-
-
 end

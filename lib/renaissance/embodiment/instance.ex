@@ -2,11 +2,13 @@ defmodule Renaissance.Embodiment.Instance do
   use Ecto.Schema
   import Ecto.Changeset
 
-  @primary_key :false
+  @primary_key false
   schema "embodiment_instances" do
     # TODO: Can we use characterid as the hash key on its own, and just index on userid?
-    field :id, :string, primary_key: true # HASH KEY compound userid|characterid
-    field :instance_id, :string, default: "default", primary_key: true # RANGE KEY
+    # HASH KEY compound userid|characterid
+    field :id, :string, primary_key: true
+    # RANGE KEY
+    field :instance_id, :string, default: "default", primary_key: true
     field :userid, :string
     field :characterid, :string
     field :roomid, :string
@@ -17,13 +19,15 @@ defmodule Renaissance.Embodiment.Instance do
   defp compute_id(changeset) do
     case changeset do
       %Ecto.Changeset{changes: %{userid: uid, characterid: cid, id: ucid}} ->
-        if (ucid == "#{uid}|#{cid}") do
+        if ucid == "#{uid}|#{cid}" do
           changeset
         else
           add_error(changeset, :id, "Provided an id that doesn't match the user and character.")
         end
+
       %Ecto.Changeset{changes: %{userid: uid, characterid: cid}} ->
         put_change(changeset, :id, "#{uid}|#{cid}")
+
       _ ->
         changeset
     end

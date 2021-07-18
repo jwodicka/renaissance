@@ -4,16 +4,71 @@ on:
   push:
     branches: [ main ]
   pull_request:
-    branches: [ main ]
-
-
+    branches: [ main ]  
 
 jobs:
-  build:
+  compile:
+    name: Compile
 
-    name: Build and test
     runs-on: ubuntu-latest
-    
+    env:
+      MIX_ENV: test
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Elixir
+      uses: erlef/setup-elixir@885971a72ed1f9240973bd92ab57af8c1aa68f24
+      with:
+        elixir-version: '1.12.1' # Define the elixir version [required]
+        otp-version: '24.0.2' # Define the OTP version [required]
+
+    - name: Restore dependencies cache
+      uses: actions/cache@v2
+      with:
+        path: deps
+        key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
+        restore-keys: ${{ runner.os }}-mix-
+
+    - name: Install dependencies
+      run: mix deps.get
+
+    - name: Compile code
+      run: mix compile --force --warnings-as-errors
+
+  format:
+    name: Format
+
+    runs-on: ubuntu-latest
+    env:
+      MIX_ENV: test
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Elixir
+      uses: erlef/setup-elixir@885971a72ed1f9240973bd92ab57af8c1aa68f24
+      with:
+        elixir-version: '1.12.1' # Define the elixir version [required]
+        otp-version: '24.0.2' # Define the OTP version [required]
+
+    - name: Restore dependencies cache
+      uses: actions/cache@v2
+      with:
+        path: deps
+        key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
+        restore-keys: ${{ runner.os }}-mix-
+
+    - name: Install dependencies
+      run: mix deps.get
+
+    - name: Format code
+      run: mix format --check-formatted
+
+  test:
+    name: Run tests
+
+    runs-on: ubuntu-latest
     env:
       MIX_ENV: test
     
@@ -21,22 +76,26 @@ jobs:
       dynamodb-local:
         image: amazon/dynamodb-local
         ports:
-          - 8000:8008
+          - 8008:8000
 
     steps:
     - uses: actions/checkout@v2
+
     - name: Set up Elixir
       uses: erlef/setup-elixir@885971a72ed1f9240973bd92ab57af8c1aa68f24
       with:
         elixir-version: '1.12.1' # Define the elixir version [required]
         otp-version: '24.0.2' # Define the OTP version [required]
+
     - name: Restore dependencies cache
       uses: actions/cache@v2
       with:
         path: deps
         key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
         restore-keys: ${{ runner.os }}-mix-
+
     - name: Install dependencies
       run: mix deps.get
+
     - name: Run tests
       run: mix test

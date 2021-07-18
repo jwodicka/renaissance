@@ -53,17 +53,12 @@ defmodule Renaissance.Auth do
 
   """
   def create_user(attrs \\ %{}) do
-    IO.write("CU attrs: ")
-    IO.inspect(attrs)
-
     %User{}
     |> User.changeset(attrs)
     |> Repo.insert()
   end
 
   def find_or_create_user_by_authid(authid, attrs \\ %{}) do
-    IO.write("attrs: ")
-    IO.inspect(attrs)
     case find_user_by_authid(authid) do
       nil -> create_user(Map.put(attrs, :authid, authid))
       user -> {:ok, user}

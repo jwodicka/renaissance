@@ -25,6 +25,7 @@ defmodule RenaissanceWeb.AuthController do
         |> put_flash(:info, "Welcome, " <> user.name <> "!")
         |> put_session(:current_user, user)
         |> redirect(to: "/")
+
       {:error, reason} ->
         conn
         |> put_flash(:error, reason)

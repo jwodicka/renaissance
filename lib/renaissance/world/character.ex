@@ -6,7 +6,8 @@ defmodule Renaissance.World.Character do
 
   @primary_key {:id, :binary_id, autogenerate: true}
   schema "characters" do
-    field :admin, :string # admin should be the id of a user
+    # admin should be the id of a user
+    field :admin, :string
     field :description, :string
     field :name, :string
 

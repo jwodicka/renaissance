@@ -12,6 +12,8 @@ defmodule RenaissanceWeb.UserControllerTest do
     user
   end
 
+  @moduletag :auth
+
   describe "index" do
     test "lists all users", %{conn: conn} do
       conn = get(conn, Routes.user_path(conn, :index))
@@ -75,6 +77,7 @@ defmodule RenaissanceWeb.UserControllerTest do
     test "deletes chosen user", %{conn: conn, user: user} do
       conn = delete(conn, Routes.user_path(conn, :delete, user))
       assert redirected_to(conn) == Routes.user_path(conn, :index)
+
       assert_error_sent 404, fn ->
         get(conn, Routes.user_path(conn, :show, user))
       end
